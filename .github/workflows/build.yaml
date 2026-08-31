@@ -1,0 +1,19 @@
+name: build veejay
+on: [push]
+jobs:
+  build-veejay:
+    runs-on: ubuntu-26.04
+    env:
+      PREFIX: /usr/local/veejay
+    steps:
+      - uses: actions/checkout@v6
+      - name: install dependencies
+        run:
+          scripts/print-deps.sh scripts/deps.list | xargs sudo apt install -y
+      - name: build veejay
+        run:
+          PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig" ./run-and-install-locally.sh --prefix="$PREFIX" --with-ndi=no
+        working-directory: ./veejay-current
+      - name: check if is installed veejay
+        run: ls -l "$PREFIX"
+#      - name: upload built veejay binaries
