@@ -1,0 +1,37 @@
+# A build container for veejay
+#
+# It assumes to be used on repository root like:
+#     docker build -f Dockerfile.build .
+#
+# Build args:
+#
+# - prefix     ... An install prefix. Just be passed to configure script.
+# - base_image ... A base image for build.
+#
+
+ARG prefix=/usr/local/veejay
+ARG base_image=debian:13
+
+FROM $base_image AS deps
+
+RUN apt update && apt upgrade -y
+
+WORKDIR /build-veejay
+COPY scripts/* ./
+RUN ./print-deps.sh deps.list | xargs apt install -y
+
+FROM deps AS source
+
+WORKDIR /build-veejay
+COPY veejay-current veejay-current
+
+FROM source
+
+ARG prefix
+ENV PREFIX=$prefix
+ENV PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
+
+WORKDIR /build-veejay/veejay-current
+RUN ./run-and-install-locally.sh --prefix=$PREFIX --with-ndi=no
+
+RUN ls -lR "$prefix"
