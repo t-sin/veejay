@@ -17,5 +17,5 @@ jobs:
         working-directory: ./veejay-current
       - name: check if is installed veejay
         run: ls -lR "$PREFIX"
-      - name: TODO: upload built veejay binaries
-        run: echo 'TODO: uploadt binaries'
+      - name: upload built veejay binaries
+        run: echo TODO uploadt binaries
