@@ -7,6 +7,8 @@ jobs:
       PREFIX: /usr/local/veejay
     steps:
       - uses: actions/checkout@v6
+      - name: update packages
+        run: sudo apt update && sudo apt upgrade -y
       - name: install dependencies
         run: ./install-dependencies.sh
         working-directory: ./veejay-current
