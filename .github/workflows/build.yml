@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: install dependencies
-        run: install-dependencies.sh
+        run: ./install-dependencies.sh
         working-directory: ./veejay-current
       - name: build veejay
         run: ./run-and-install-locally.sh
