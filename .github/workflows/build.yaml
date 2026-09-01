@@ -1,4 +1,5 @@
 name: build veejay
+# TODO: when builds are triggered?
 on: [push]
 jobs:
   build-veejay:
@@ -15,5 +16,6 @@ jobs:
           PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig" ./run-and-install-locally.sh --prefix="$PREFIX" --with-ndi=no
         working-directory: ./veejay-current
       - name: check if is installed veejay
-        run: ls -l "$PREFIX"
-#      - name: upload built veejay binaries
+        run: ls -lR "$PREFIX"
+      - name: TODO: upload built veejay binaries
+        run: echo 'TODO: uploadt binaries'
