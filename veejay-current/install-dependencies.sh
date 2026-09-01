@@ -43,4 +43,4 @@ declare -a deps=(
     sudo
 )
 
-sudo apt install -y "${deps[@]}"
+apt install -y "${deps[@]}"
