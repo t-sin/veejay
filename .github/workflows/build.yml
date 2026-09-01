@@ -10,15 +10,16 @@ jobs:
       - name: update packages
         run: sudo apt update && sudo apt upgrade -y
       - name: install dependencies
-        run: ./install-dependencies.sh
+        run: sudo ./install-dependencies.sh
         working-directory: ./veejay-current
-      - name: build veejay
-        run: ./run-and-install-locally.sh
+      - name: build binary packages
+        run: ./build-binary-package.sh all
         env:
           PKG_CONFIG_PATH: "${{ env.PREFIX }}/lib/pkgconfig"
           PACKAGE_ARGS: --prefix="${{ env.PREFIX }}" --with-ndi=no
         working-directory: ./veejay-current
       - name: check if is installed veejay
-        run: ls -lR "${{ env.PREFIX }}"
+        run: ls -l .
+        working-directory: ./veejay-current
       - name: upload built veejay binaries
         run: echo TODO uploadt binaries
