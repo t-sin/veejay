@@ -13,7 +13,7 @@ jobs:
         run: sudo ./install-dependencies.sh
         working-directory: ./veejay-current
       - name: build binary packages
-        run: ./build-binary-packages.sh all
+        run: ./build-binary-packages.sh --target all
         env:
           PKG_CONFIG_PATH: "${{ env.PREFIX }}/lib/pkgconfig"
           PACKAGE_ARGS: --prefix="${{ env.PREFIX }}" --with-ndi=no
