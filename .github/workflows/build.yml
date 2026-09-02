@@ -1,7 +1,7 @@
-name: automated build veejay
+name: automated builds for veejay
 on: [push]
 jobs:
-  build-veejay:
+  build-check:
     runs-on: ubuntu-26.04
     env:
       PREFIX: /usr/local/veejay
@@ -12,14 +12,22 @@ jobs:
       - name: install dependencies
         run: sudo ./install-dependencies.sh
         working-directory: ./veejay-current
-      - name: build binary packages
-        run: ./build-binary-packages.sh --prepare-sbuild --target all
+      - name: build binaries
+        run: ./run-and-install-locally.sh --prefix="${{ env.PREFIX }}" --with-ndi=no
         env:
           PKG_CONFIG_PATH: "${{ env.PREFIX }}/lib/pkgconfig"
-          PACKAGE_ARGS: --prefix="${{ env.PREFIX }}" --with-ndi=no
         working-directory: ./veejay-current
       - name: check if is installed veejay
-        run: ls -l .
+        run: ls -l "${{ env.PREFIX }}"
         working-directory: ./veejay-current
+#      - name: build binary packages
+#        run: ./build-binary-packages.sh --prepare-sbuild --target all
+#        env:
+#          PKG_CONFIG_PATH: "${{ env.PREFIX }}/lib/pkgconfig"
+#          PACKAGE_ARGS: --prefix="${{ env.PREFIX }}" --with-ndi=no
+#        working-directory: ./veejay-current
+#      - name: check if is installed veejay
+#        run: ls -l .
+#        working-directory: ./veejay-current
       - name: upload built veejay binaries
         run: echo TODO uploadt binaries
